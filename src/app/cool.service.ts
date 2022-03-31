@@ -4,7 +4,7 @@ import { Injectable, ApplicationRef } from '@angular/core';
 export class CoolService {
   state = 0;
 
-  constructor(private app: ApplicationRef) {}
+  constructor(private app: ApplicationRef) { }
 
   setState() {
     this.state = Math.random();

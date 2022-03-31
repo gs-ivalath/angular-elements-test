@@ -3,15 +3,14 @@ import { NgModule, Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { MyBtnComponent } from './my-btn/my-btn.component';
 import { CoolService } from './cool.service';
-import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
-  declarations: [MyBtnComponent, ContactComponent],
+  declarations: [MyBtnComponent],
   imports: [
     BrowserModule
   ],
   providers: [CoolService],
-  entryComponents: [MyBtnComponent, ContactComponent]
+  entryComponents: [MyBtnComponent]
 })
 export class AppModule {
   constructor(private injector: Injector) { }
@@ -19,7 +18,6 @@ export class AppModule {
   ngDoBootstrap() {
     const elements: any[] = [
       [MyBtnComponent, 'my-btn'],
-      [ContactComponent, 'contact-form']
     ];
 
     for (const [component, name] of elements) {

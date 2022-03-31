@@ -7,7 +7,10 @@ import { CoolService } from '../cool.service';
   styleUrls: ['./my-btn.component.css']
 })
 export class MyBtnComponent implements OnInit {
-  constructor(public cool: CoolService) {}
+  btnInstance: any;
+  constructor(public cool: CoolService) {
+    this.btnInstance = Math.random();
+  }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }
