@@ -3,6 +3,7 @@ import { NgModule, Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { MyBtnComponent } from './my-btn/my-btn.component';
 import { CoolService } from './cool.service';
+import { ElementZoneStrategyFactory } from 'elements-zone-strategy';
 
 @NgModule({
   declarations: [MyBtnComponent],
@@ -13,16 +14,22 @@ import { CoolService } from './cool.service';
   entryComponents: [MyBtnComponent]
 })
 export class AppModule {
-  constructor(private injector: Injector) { }
 
-  ngDoBootstrap() {
-    const elements: any[] = [
-      [MyBtnComponent, 'my-btn'],
-    ];
+  readonly customElementsMap = {
+    'my-btn': MyBtnComponent,
+  };
 
-    for (const [component, name] of elements) {
-      const el = createCustomElement(component, { injector: this.injector });
-      customElements.define(name, el);
+  //constructor(private injector: Injector, private router: Router) {
+  constructor(private injector: Injector) {
+    this.registerElements();
+  }
+
+  registerElements() {
+    for (const ele in this.customElementsMap) {
+      const strategyFactory = new ElementZoneStrategyFactory(this.customElementsMap[ele], this.injector);
+      const customElement = createCustomElement(this.customElementsMap[ele], { injector: this.injector, strategyFactory });
+      customElements.define(ele, customElement);
     }
   }
+  ngDoBootstrap() { }
 }
